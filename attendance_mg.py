@@ -3,7 +3,7 @@ import pandas as pd
 import sqlite3 
 from datetime import datetime, timedelta
 
-
+#データベース
 conn = sqlite3.connect('data.db')
 conn.execute('''
 CREATE TABLE IF NOT EXISTS data ( 
@@ -14,6 +14,7 @@ start_time TEXT NOT NULL,
 finish_time TEXT NOT NULL 
 )''')
 
+#入力画面
 st.header('勤怠管理') 
 name = st.text_input("名前の入力")
 dep = st.selectbox("部署の選択",(" ","営業","エンジニア", "スタッフ"))
@@ -21,6 +22,7 @@ date = st.date_input('日付を選択してください')
 start_time = st.time_input('出勤時間を選択してください') 
 finish_time = st.time_input('退勤時間を選択してください')
 
+#ボタン後
 if st.button('保存'): 
     date_str = date.strftime('%Y-%m-%d')  
     st_time_str = start_time.strftime('%H:%M:%S')
@@ -42,8 +44,9 @@ df = pd.read_sql_query(f'''
     FROM data
 ''', conn)
 
-
 st.table(df)
+
+#リセット
 if st.button('データのリセット'): 
     conn.execute('DROP TABLE IF EXISTS data') 
     conn.execute(''' 
