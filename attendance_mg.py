@@ -3,10 +3,8 @@ import pandas as pd
 import sqlite3 
 from datetime import datetime, timedelta
 
-# SQLiteに接続する
-conn = sqlite3.connect('data.db')
 
-# テーブルを作成する 
+conn = sqlite3.connect('data.db')
 conn.execute('''
 CREATE TABLE IF NOT EXISTS data ( 
 name TEXT NOT NULL,
@@ -16,8 +14,6 @@ start_time TEXT NOT NULL,
 finish_time TEXT NOT NULL 
 )''')
 
-
-# ユーザーからの入力を受け付ける 
 st.header('勤怠管理') 
 name = st.text_input("名前の入力")
 dep = st.selectbox("部署の選択",(" ","営業","エンジニア", "スタッフ"))
@@ -25,7 +21,6 @@ date = st.date_input('日付を選択してください')
 start_time = st.time_input('出勤時間を選択してください') 
 finish_time = st.time_input('退勤時間を選択してください')
 
-# 入力されたデータをSQLiteに保存する・・・押されたバタンで分岐する
 if st.button('保存'): 
     date_str = date.strftime('%Y-%m-%d')  
     st_time_str = start_time.strftime('%H:%M:%S')
